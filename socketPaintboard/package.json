@@ -1,0 +1,23 @@
+{
+  "name": "socketpaintboard",
+  "version": "1.0.0",
+  "description": "소켓 통신 공부용",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "socket",
+    "node.js",
+    "paintboard"
+  ],
+  "author": "sopipc167",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "socket.io": "^4.7.2"
+  }
+}

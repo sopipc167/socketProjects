@@ -1,0 +1,28 @@
+{
+    "name": "gif-chat",
+    "version": "0.0.1",
+    "description": "웹 소켓 실험용",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "sopipc167",
+    "license": "ISC",
+    "dependencies": {
+        "connect-flash": "^0.1.1",
+        "cookie-parser": "1.4.3",
+        "dotenv": "^5.0.1",
+        "express": "^4.16.2",
+        "express-session": "^1.15.6",
+        "morgan": "^1.9.0",
+        "package.json": "^0.0.0",
+        "pug": "^3.0.2",
+        "socket.io": "^4.7.2",
+        "ws": "^8.13.0"
+    },
+    "devDependencies": {
+        "jest": "^29.6.2",
+        "nodemon": "^3.0.1"
+    }
+}

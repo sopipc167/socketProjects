@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>socket io 공부용 pug 개새끼</title>
+    </head>
+    <body>
+        <div>f12를 눌러서 console 탭과 network 탭을 확인해보세요</div>
+        <h1>소켓 통신 채팅</h1>
+        <div id="chat-form">
+        <form id="chat">
+            <input type="text" id="form"/>
+            <button type="submit" id="send">send</button>
+        </form>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script>
+            const socket = io();
+            /*
+            const socket = io.connect('http://localhost:8080', {
+                path: '/socket.io'
+            });
+            console.log(socket);
+            socket.on('news', function (data){
+                console.log(data);
+                socket.emit('reply','hello node.js');
+            });
+            */
+            socket.on('msg', (text)=>{
+                var newp=document.createElement('p');
+                newp.innerHTML=text;
+                $("#chat-form").append(newp);
+            })
+            $("#text").change(() => {
+                console.log('일단 성공함');
+                var chat =$("#form").value;
+                var newp = document.createElement('p');
+                $("#chat-form").appendChild(newp);
+                newp.innerHTML=chat;
+               
+            });
+            //socket.broadcast.emit('msg',chat)
+            /*
+            socket.on('chat', (data) => {
+                var chat = document.createElement('div');
+                chat.textContent =data.chat;
+                document.querySelector('#chat-form').addEventListener('submit', (e)=>{
+                    e.preventDefault();
+                    if (e.target.chat.value) {//살짝 이상
+                        var xhr = new XMLHttpRequest();
+                        xhr.onload = () => {
+                            if (xhr.status === 200){
+                                e.target.chat.value = '';
+                            } else {
+                                console.error(xhr.responseText);
+                            }
+                        };
+                        xhr.open('POST','/');
+                        xhr.setRequestHeader('Content-Type','application/json');
+                        xhr.send(JSON.stringify({chat:this.chat.value}));
+                    }
+                })
+            });
+            */
+        </script>
+    </body>
+</html>    

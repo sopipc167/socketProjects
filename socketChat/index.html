@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>socket io 공부용 pug 개새끼</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            $(document).ready(()=>{
+                var socket = io.connect();
+
+                socket.on('msg',(data)=>{
+                    console.log('메세지 작동'+ data.name+data.message);
+                    var output='';
+                    output += '<li>';
+                    output += '<h3>'+data.name+'</h3>';
+                    output += '<p>'+data.message+'</p>';
+                    output += '<p>'+data.date+'</p>';
+                    output += '</li>';
+                    $(output).prependTo('#content');
+                });
+                $('button').click(()=>{
+                    console.log('버튼 작동');
+                    socket.emit('msg', {
+                        name: $('#name').val(),
+                        message: $('#message').val(),
+                        date: new Date().toUTCString()
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>소켓 통신 채팅</h1>
+        <p>그냥 채팅</p>
+        <hr/>
+        <input id="name"/>
+        <input id="message"/>
+        <button>입력</button>
+        <ul id="content">
+
+        </ul>
+    </body>
+</html>    

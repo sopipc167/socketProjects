@@ -1,0 +1,21 @@
+{
+  "name": "socketchat",
+  "version": "1.0.0",
+  "description": "소켓 통신 공부용",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "소켓",
+    "채팅",
+    "node.js",
+    "공부용"
+  ],
+  "author": "sopipc167",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.7.2",
+    "ws": "^8.13.0"
+  }
+}
