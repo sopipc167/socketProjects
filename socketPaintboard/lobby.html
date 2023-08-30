@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>로비 페이지</title>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io.connect();
+            $(document).ready(()=>{
+                console.log('문서 실행');
+                $.getJSON('/room', (data)=>{
+                    console.log('실행중'+data)
+                    $.each(data, (index,item)=>{
+                        $('<button></button>').attr({
+                            'data-room':item,
+                            'id':index,
+                            
+                        }).text('Room Name:'+item).appendTo('#container');
+                    });
+                });
+                $(document).on('click','#container > button', (btn)=>{
+                
+                    var room = btn.target.getAttribute("data-room");
+                    console.log(room);
+                    location = '/canvas/' + room;
+                });
+                    $('body > button').click(()=>{
+                        var room = $('#room').val();
+                        socket.emit('create_room',room);
+                        location='/canvas/'+room;
+                    });
+                });
+        </script>
+    </head>
+    <body>
+        <h1> 실시간 캔버스 </h1>
+        <p>Socket.io로 웹서버 접속</p>
+        <span>ROOM:</span>
+        <input id="room"/>
+        <button>방 생성</button>
+        <hr/>
+        <div id="container">
+            
+        </div>
+    </body>
+</html>
