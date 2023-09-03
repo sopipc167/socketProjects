@@ -6,14 +6,15 @@ const fs = require('fs');
 
 const app = express();
 //app.use(app.router);
+app.set('port', process.env.PORT || 8005);
 app.use(express.static('public'));
 
 var server = http.createServer(app);
 
 var roomlist = [];
-server.listen(8005,()=>{
+server.listen(app.get('port'),()=>{
     console.log('server running...');
-})
+});
 
 var io = socketio(server);
 //io.set('log level',2);
@@ -34,14 +35,14 @@ app.get('/canvas/:room', (req,res)=>{
 
 app.get('/room',(req,res)=>{
     res.send(JSON.stringify(roomlist));
-    console.log(JSON.stringify(roomlist));
 });
 
-io.on('connection',(socket)=>{
-    
-    socket.on('join',(data) => {
+io.on('connection',(socket)=>{ 
+    socket.on('join',(data,canvas) => {
         socket.join(data);
         socket.room = data;
+        console.log('캔버스를 클라이언트에 전송함',canvas);
+        io.sockets.in(room).emit('syncBoard',canvas);
     });
     socket.on('draw', function (data) {
         io.sockets.in(socket.room).emit('line', data);
@@ -49,7 +50,6 @@ io.on('connection',(socket)=>{
     socket.on('create_room',(data)=>{
         io.sockets.emit('create_room',data.toString());
         roomlist.push(data.toString());
-        console.log("방목록은:"+roomlist);
-    })
+    });
 });
 

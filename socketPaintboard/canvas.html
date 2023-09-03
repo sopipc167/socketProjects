@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/farbtastic.css" />
     <link rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="/js/jquery-ui-1.8.16.custom.min.js "></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/farbtastic.js"></script>
     <script>
@@ -34,7 +34,7 @@
                 if (isDown) {
                     console.log('painting');
                     newPoint = new Point(event, this);
-
+                    
                     socket.emit('draw', {
                         width: width,
                         color: color,
@@ -58,17 +58,25 @@
                 context.lineTo(data.x2, data.y2);
                 context.stroke();
             });
+            socket.on('syncBoard',(board)=>{
+                console.log('캔버스를 로드함');
+                this.canvas = board;
+            });
 
        
             $('#colorpicker').farbtastic(function (data) {
                 color = data;
             });
-
+            var handle = $( "#slider > span" );
             $('#slider').slider({
                 max: 20, min: 1,
                 value: 5,
-                change: function (event, ui) {
+                create: ()=>{
+                    handle.text($(this).slider("value"));
+                },
+                slide: (event, ui) => {
                     width = ui.value;
+                    handle.text(ui.value);
                 }
             });
         });
